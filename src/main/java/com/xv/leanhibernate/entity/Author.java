@@ -1,16 +1,28 @@
 package com.xv.leanhibernate.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "author")
 public class Author {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
     private String password;
+
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Article> articleList;
+
+
+    public List<Article> getArticleList() {
+        return articleList;
+    }
+
+    public void setArticleList(List<Article> articleList) {
+        this.articleList = articleList;
+    }
 
     public Integer getId() {
         return id;
@@ -35,6 +47,10 @@ public class Author {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
+
+
 
     public Author() {
     }
